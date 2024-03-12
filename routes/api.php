@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Fruit\ShowController;
 use App\Http\Controllers\User\StoreController;
 use Illuminate\Http\Request;
@@ -25,6 +26,17 @@ Route::group(['namespace' => 'User', 'prefix' => 'users'], function (){
 });
 
 
-Route::group(['namespace' => 'Fruit', 'prefix' => 'fruits'], function (){
-    Route::get('/', [ShowController::class, '__invoke']);
+
+
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
+
+    Route::group(['middleware' => 'auth:api'], function (){
+        Route::group(['namespace' => 'Fruit', 'prefix' => 'fruits'], function (){
+            Route::get('/', [ShowController::class, '__invoke']);
+        });
+    });
 });
