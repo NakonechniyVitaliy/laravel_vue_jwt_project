@@ -1,12 +1,29 @@
 <script>
-
+export default {
+    data(){
+        return{
+            email: null,
+            password: null
+        }
+    },
+    methods:{
+      login(){
+          axios.post('/api/auth/login',{
+              email: this.email,
+              password: this.password,
+          }).then(res =>{
+              localStorage.setItem('access_token', res.data.access_token)
+          })
+      }
+    },
+}
 </script>
 
 <template>
     <div class="w-25">
-        <input class="form-control mt-2" placeholder="email" type="email">
-        <input class="form-control mt-2" placeholder="password" type="password">
-        <input class="btn btn-primary mt-2" value="Submit" type="submit" >
+        <input v-model="email" class="form-control mt-2" placeholder="email" type="email">
+        <input v-model="password" class="form-control mt-2" placeholder="password" type="password">
+        <input @click.prevent='login()' class="btn btn-primary mt-2" value="Submit" type="submit" >
     </div>
 </template>
 
