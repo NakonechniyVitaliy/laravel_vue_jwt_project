@@ -5,11 +5,9 @@ import api from "@/api.js";
         data() {
             return {
                 fruits: [],
-                api: null
             }
         },
         mounted() {
-            this.initApi()
             this.getFruits()
         },
         methods: {
@@ -18,10 +16,6 @@ import api from "@/api.js";
                     .then(res => {
                         this.fruits = res.data.data
                     })
-            },
-
-            initApi() {
-
             },
         }
     }
