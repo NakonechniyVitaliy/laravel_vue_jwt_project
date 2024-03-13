@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
             })
         }
     }
-    if (to.name === 'users.login' && access_token){
+    if (to.name === 'users.login' || to.name === 'users.registration' && access_token){
         return next({
             name: 'users.personal'
         })

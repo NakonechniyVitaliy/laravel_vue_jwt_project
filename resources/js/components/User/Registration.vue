@@ -16,7 +16,10 @@
                   password: this.password,
                   password_confirmation: this.password_confirmation,
               }).then(res =>{
-                  console.log(res)
+                  localStorage.setItem('access_token', res.data.access_token)
+                  this.$router.push({name: 'users.personal'})
+              }).catch(error => {
+                  this.error = error.response.data.error
               })
           }
         },
