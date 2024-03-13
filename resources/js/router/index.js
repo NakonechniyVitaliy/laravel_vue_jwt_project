@@ -23,7 +23,33 @@ const router = createRouter({
             name: 'users.personal',
             component: () => import('../components/User/Personal.vue')
         },
+        {
+            path: '/.*',
+            name: '404',
+            component: () => import('../components/User/Personal.vue')
+        },
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    const access_token = localStorage.getItem('access_token')
+
+    if (!access_token) {
+        if (to.name === 'users.login' || to.name === 'users.registration') {
+            return next()
+        } else {
+            return next({
+                name: 'users.login'
+            })
+        }
+    }
+    if (to.name === 'users.login' && access_token){
+        return next({
+            name: 'users.personal'
+        })
+    }
+
+    next();
 })
 
 export default router
