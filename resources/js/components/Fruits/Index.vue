@@ -1,22 +1,23 @@
 <script>
-    export default{
-        data(){
-            return{
+import api from "@/api.js";
+
+    export default {
+        data() {
+            return {
                 fruits: [],
             }
         },
         mounted() {
             this.getFruits()
         },
-        methods:{
-          getFruits(){
-              axios.get('/api/fruits')
-                  .then(res =>{
-                      this.fruits = res.data.data
-                      console.log(this.fruits)
-                  })
-          }
-        },
+        methods: {
+            getFruits() {
+                api.get('/api/auth/fruits')
+                    .then(res => {
+                        this.fruits = res.data.data
+                    })
+            },
+        }
     }
 </script>
 

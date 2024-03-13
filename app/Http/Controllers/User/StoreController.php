@@ -12,9 +12,10 @@ class StoreController extends Controller
     public function __invoke(StoreRequest $request)
     {
         $data = $request->validated();
-        User::firstOrCreate([
-            'email' => $data['email']
-        ], $data);
-        return response([]);
+
+        $user = User::create($data);
+
+        $token = auth()->tokenById($user->id);
+        return response(['access_token' => $token]);
     }
 }
